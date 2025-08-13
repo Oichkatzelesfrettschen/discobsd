@@ -104,6 +104,9 @@ Building
 
 DiscoBSD is cross-built on UNIX-like host operating systems.
 
+For detailed host preparation and Ninja/LLVM build guidance, consult
+[`docs/BUILDING.md`](docs/BUILDING.md).
+
 Currently supported host operating systems: OpenBSD, Linux, FreeBSD.
 
 Instructions to configure an OpenBSD host development environment for
