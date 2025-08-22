@@ -17,12 +17,27 @@ sudo apt install -y \
     clang lld llvm \
     clang-format clang-tidy \
     gdb valgrind \
-    linux-tools-common linux-tools-generic
+    linux-tools-common linux-tools-generic \
+    byacc flex libfuse-dev pkg-config mandoc
 ```
 
 > `perf` is provided by the `linux-tools-*` packages.  A kernel-specific
 > package may be necessary when the running kernel version does not match the
 > `linux-tools-generic` release.
+
+Byacc and Flex supply the parser and lexer generators required for
+building the `kconfig` utility.  `mandoc` renders its manual page, while
+the `libfuse-dev` and `pkg-config` packages enable the optional
+FUSE-based `fsutil` tool.
+
+To verify the parser toolchain, explicitly select the host's parser and
+lexer generators and rebuild the configuration utility:
+
+```sh
+export YACC=byacc
+export LEX=flex
+make -C tools/kconfig clean all
+```
 
 Optional tooling used for static and dynamic analysis includes `ripgrep`,
 `universal-ctags`, `cscope`, `doxygen`, `graphviz`, `cppcheck`, `sloccount`,
