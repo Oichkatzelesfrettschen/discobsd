@@ -1,5 +1,10 @@
 %{
 #include "defs.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int yylineno;
 
 struct depblock *pp;
 FSTATIC struct shblock *prevshp;

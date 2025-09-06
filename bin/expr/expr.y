@@ -3,6 +3,29 @@
 %token OR AND ADD SUBT MULT DIV REM EQ GT GEQ LT LEQ NEQ
 %token A_STRING SUBSTR LENGTH INDEX NOARG MATCH
 
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int      yylex(void);
+char    *rel(int, char *, char *);
+char    *arith(int, char *, char *);
+char    *conju(int, char *, char *);
+char    *substr(char *, char *, char *);
+char    *length(char *);
+char    *cindex(char *, char *);
+char    *match(char *, char *);
+int      ematch(char *, char *);
+void     errxx(int);
+char    *compile(char *, char *, char *, int);
+int      step(char *, char *);
+int      advance(char *, char *);
+void     getrnge(char *);
+int      ecmp(char *, char *, int);
+void     yyerror(char *);
+%}
+
 /* operators listed below in increasing precedence: */
 %left OR
 %left AND
@@ -48,30 +71,10 @@ expr: '(' expr ')'          { $$ = (int) $2; }
     ;
 %%
 /*  expression command */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #define ESIZE   256
 #define error(c)    errxx(c)
 #define EQL(x,y) !strcmp(x,y)
-
-int      yylex();
-char    *rel();
-char    *arith();
-char    *conju();
-char    *substr();
-char    *length();
-char    *cindex();
-char    *match();
-int      ematch();
-void     errxx();
-char    *compile();
-int      step();
-int      advance();
-void     getrnge();
-int      ecmp();
-void     yyerror();
 
 char    **Av;
 int Ac;
@@ -160,7 +163,7 @@ arith(op, r1, r2)
     case REM: i1 = i1 % i2; break;
     }
     rv = malloc(16);
-    sprintf(rv, "%D", i1);
+    sprintf(rv, "%ld", i1);
     return rv;
 }
 

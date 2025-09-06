@@ -1,26 +1,20 @@
 TOPSRC!=cd ../..; pwd
+include ../Makefile.inc
 
--include ../Makefile.inc
+PROG=   xinstall
+SRCS=   xinstall.c
+OBJS=   xinstall.o
 
-PROG=	xinstall
-OBJS=	xinstall.o
+CFLAGS+= ${_LIBBSD_CFLAGS}
+LDLIBS+= ${_LIBBSD_LIBS}
 
-# Use uninstalled copy of the install program.
-INSTALL=./xinstall
-
-# libbsd-dev package on Linux in overlay mode.
-CFLAGS+=${_LIBBSD_CFLAGS}
-LIBS+=	${_LIBBSD_LIBS}
-
-all:	${PROG}
+all: ${PROG}
 
 ${PROG}: ${OBJS}
-	${CC} ${LDFLAGS} -o $@ ${OBJS} ${LIBS}
+	${CC} ${CFLAGS} -o ${PROG} ${OBJS} ${LDLIBS}
 
 install: all
-	${INSTALL} ${PROG} ${TOOLBINDIR}/binstall
+	./xinstall xinstall ${TOOLBINDIR}/binstall
 
 clean:
-	rm -f *~ *.o ${PROG}
-
-.PHONY: all install clean
+	rm -f *.o ${PROG}

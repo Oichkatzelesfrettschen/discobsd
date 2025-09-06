@@ -108,7 +108,7 @@ OBJDUMP!=if [ x"${MACHINE_ARCH}" = x"arm" ] ; then \
 	fi
 
 YACC!=	if [ x"${_HOST_OSNAME}" = x"Linux" ] ; then \
-		echo "byacc" ; \
+		echo "bison -y" ; \
 	else \
 		echo "yacc" ; \
 	fi

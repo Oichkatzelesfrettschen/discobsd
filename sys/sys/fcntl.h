@@ -99,6 +99,13 @@
 /* Not currently implemented but it may be placed on the TODO list shortly */
 #define O_NOCTTY    0x4000      /* don't assign controlling terminal */
 
+/* AT_* constants for *at() functions - POSIX.1-2008 */
+#define AT_FDCWD            -100    /* Use current working directory */
+#define AT_SYMLINK_NOFOLLOW 0x8000  /* Do not follow symbolic links */
+#define AT_REMOVEDIR        0x10000 /* Remove directory */
+#define AT_SYMLINK_FOLLOW   0x20000 /* Follow symbolic links */
+#define AT_EACCESS          0x40000 /* Check using effective UID/GID */
+
 #ifdef KERNEL
 /* convert from open() flags to/from fflags; convert O_RD/WR to FREAD/FWRITE */
 #define FFLAGS(oflags)  ((oflags) + 1)

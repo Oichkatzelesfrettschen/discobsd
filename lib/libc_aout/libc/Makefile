@@ -59,18 +59,13 @@ SYSOBJS		= __sysctl.o accept.o access.o adjtime.o bind.o chdir.o \
                   geteuid.o profil.o sigpending.o sync.o ufetch.o ustore.o \
                   ucall.o umask.o vfork.o vhangup.o rdglob.o wrglob.o
 
-OBJS		= $(SYSOBJS) sbrk.o execl.o execle.o execv.o \
-		  _exit.o _brk.o pipe.o ptrace.o sigaction.o
+MACHINE_OBJS		= $(SYSOBJS) sbrk.o execl.o execle.o execv.o \
+		  _exit.o _brk.o pipe.o ptrace.o sigaction.o \
+		  bcopy.o bzero.o ffs.o memcpy.o memmove.o memset.o \
+                  strlen.o bcmp.o index.o rindex.o strcmp.o \
+		  _setjmp.o htonl.o htons.o
 
-# libc/$(MACHINE_ARCH)/string
-OBJS            += bcopy.o bzero.o ffs.o memcpy.o memmove.o memset.o \
-                   strlen.o bcmp.o index.o rindex.o strcmp.o
-
-# libc/$(MACHINE_ARCH)/gen
-OBJS            += _setjmp.o htonl.o htons.o
-
-# libc/gen
-OBJS            += abort.o alarm.o atof.o atoi.o atol.o basename.o \
+GEN_OBJS            = abort.o alarm.o atof.o atoi.o atol.o basename.o \
                    calloc.o closedir.o crypt.o ctime.o ctype_.o \
                    daemon.o devname.o dirname.o ecvt.o err.o \
                    execvp.o fakcu.o frexp.o fstab.o gcvt.o getenv.o getgrent.o \
@@ -88,8 +83,7 @@ OBJS            += abort.o alarm.o atof.o atoi.o atol.o basename.o \
                    telldir.o time.o timezone.o ttyname.o ttyslot.o ualarm.o usleep.o \
                    strdup.o uname.o wait.o wait3.o waitpid.o
 
-# libc/stdio
-OBJS            += fgetc.o fgets.o fputc.o fputs.o gets.o puts.o \
+STDIO_OBJS            = fgetc.o fgets.o fputc.o fputs.o gets.o puts.o \
                    clrerr.o doscan.o exit.o fdopen.o filbuf.o findiop.o \
                    flsbuf.o fopen.o fprintf.o fread.o freopen.o fseek.o \
                    ftell.o fwrite.o getchar.o getw.o printf.o putchar.o putw.o \
@@ -97,37 +91,38 @@ OBJS            += fgetc.o fgets.o fputc.o fputs.o gets.o puts.o \
                    strout.o ungetc.o vfprintf.o vprintf.o vsprintf.o doprnt.o \
                    remove.o feof.o ferror.o fileno.o
 
-# libc/stdlib
-OBJS            += getopt.o getsubopt.o strtol.o strtoul.o strtod.o
+STDLIB_OBJS            = getopt.o getsubopt.o strtol.o strtoul.o strtod.o
 
-# libc/string
-OBJS            += strcspn.o strerror.o strlcat.o strlcpy.o strpbrk.o \
+STRING_OBJS            = strcspn.o strerror.o strlcat.o strlcpy.o strpbrk.o \
                    strsep.o strspn.o strstr.o strtok.o strtok_r.o
 
-# libc/inet
-OBJS            += inet_addr.o inet_network.o inet_netof.o \
+INET_OBJS            = inet_addr.o inet_network.o inet_netof.o \
                    inet_ntoa.o inet_lnaof.o inet_maddr.o
 
-# libc/compat
-OBJS            += creat.o ftime.o gethostid.o memccpy.o memchr.o \
+COMPAT_OBJS            = creat.o ftime.o gethostid.o memccpy.o memchr.o \
                    memcmp.o memcpy.o memset.o nice.o pause.o rand.o \
                    sethostid.o setregid.o setreuid.o setrgid.o setruid.o \
                    sigcompat.o strchr.o strrchr.o times.o tmpnam.o \
                    utime.o
 
-# libc/runtime
-OBJS+=		addsf3.o comparesf2.o divsf3.o fixsfsi.o fixunssfsi.o \
+RUNTIME_OBJS=		addsf3.o comparesf2.o divsf3.o fixsfsi.o fixunssfsi.o \
 		floatsisf.o floatunsisf.o mulsf3.o negsf2.o subsf3.o \
 		adddf3.o comparedf2.o divdf3.o fixdfsi.o fixunsdfsi.o \
 		floatsidf.o floatunsidf.o muldf3.o negdf2.o subdf3.o \
 		ashldi3.o lshrdi3.o \
 		sc_case.o
 
+OBJS = $(MACHINE_OBJS) $(GEN_OBJS) $(STDIO_OBJS) $(STDLIB_OBJS) $(STRING_OBJS) \
+       $(INET_OBJS) $(COMPAT_OBJS) $(RUNTIME_OBJS)
+
 all:            ../libc.a
 
 ../libc.a:	${OBJS}
 		rm -f $@
-		${AOUT_AR} rc $@ ${OBJS}
+		mkdir tmp
+		cd tmp; ${AOUT_AR} x ../*.o
+		${AOUT_AR} rc $@ tmp/*.o
+		rm -rf tmp
 		${AOUT_RANLIB} $@
 
 ${OBJS}:	FRC
