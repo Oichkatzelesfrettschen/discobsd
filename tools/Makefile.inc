@@ -22,10 +22,10 @@ _LIBBSD_LIBS!=	if [ x"${_HOST_OSNAME}" = x"Linux" ] ; then \
 			echo "" ; \
 		fi
 
-INSTALL=	${TOOLBINDIR}/binstall -U
+INSTALL=	install
 
 YACC!=		if [ x"${_HOST_OSNAME}" = x"Linux" ] ; then \
-			echo "byacc" ; \
+			echo "bison -y" ; \
 		else \
 			echo "yacc" ; \
 		fi

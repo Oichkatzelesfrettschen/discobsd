@@ -18,6 +18,9 @@
 #endif
 
 extern void sc_msec();
+extern void openat();
+extern void fstatat();
+extern void unlinkat();
 
 /*
  * Reserved/unimplemented system calls in the range 0-150 inclusive
@@ -206,6 +209,28 @@ const struct sysent sysent[] = {
     { 1, ufetch },              /* 153 = ufetch */
     { 4, ucall },               /* 154 = ucall */
     { 0, nosys },               /* 155 = fperr */
+    { 1, nosys },               /* 156 = nosys */
+    { 1, nosys },               /* 157 = nosys */
+    { 1, nosys },               /* 158 = nosys */
+    { 1, nosys },               /* 159 = nosys */
+    { 1, nosys },               /* 160 = nosys */
+    { 1, nosys },               /* 161 = nosys */
+    { 1, nosys },               /* 162 = nosys */
+    { 1, nosys },               /* 163 = nosys */
+    { 1, nosys },               /* 164 = nosys */
+    { 1, nosys },               /* 165 = nosys */
+    { 1, nosys },               /* 166 = nosys */
+    { 1, nosys },               /* 167 = nosys */
+    { 1, nosys },               /* 168 = nosys */
+    { 1, nosys },               /* 169 = nosys */
+    { 1, nosys },               /* 170 = nosys */
+    { 1, nosys },               /* 171 = nosys */
+    { 1, nosys },               /* 172 = nosys */
+    { 1, nosys },               /* 173 = nosys */
+    { 1, nosys },               /* 174 = nosys */
+    { 4, openat },              /* 175 = openat */
+    { 4, fstatat },             /* 176 = fstatat */
+    { 3, unlinkat },            /* 177 = unlinkat */
 };
 
 const int nsysent = sizeof (sysent) / sizeof (sysent[0]);

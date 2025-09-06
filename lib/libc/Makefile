@@ -27,7 +27,7 @@ TOPSRC!=cd ../..; pwd
 include ${TOPSRC}/share/mk/sys.mk
 
 DEFS		= -Wall -ffreestanding
-ALL		= gen stdio stdlib string inet compat ${MACHINE_ARCH}
+ALL		= gen stdio stdlib string inet compat sys pthread ${MACHINE_ARCH}
 
 all:            ../libc.a
 

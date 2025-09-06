@@ -47,6 +47,9 @@ kern/ufs_namei.c			standard
 kern/ufs_subr.c				standard
 kern/ufs_syscalls.c			standard
 kern/ufs_syscalls2.c			standard
+kern/vfs_syscalls_at.c			standard
+kern/kern_thread.c			optional threads
+kern/sys_mqueue.c			optional mqueue
 kern/vfs_vnops.c			standard
 kern/vm_sched.c				standard
 kern/vm_swap.c				standard

@@ -19,6 +19,11 @@ options         "BUS_KHZ=50000"             # Frequency of peripheral bus
 options         "HALTREBOOT"                # If halted, press key to reboot
 options         "BSP"                       # Board support package
 
+# POSIX options
+options         "POSIX_MINIMAL=1"           # Basic POSIX support
+options         "POSIX_THREADS=1"           # Enable cooperative threads
+options         "POSIX_MQUEUE=1"            # Enable lightweight message queues
+
 # Root filesystem at /dev/sd0a, swap at /dev/sd0b
 config          unix    root on sd0a
                         swap on sd0b
